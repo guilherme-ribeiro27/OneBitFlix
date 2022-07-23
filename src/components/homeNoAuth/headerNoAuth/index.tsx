@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Link from 'next/link';
 import { Button, Container } from 'reactstrap';
 import styles from './styles.module.scss';
