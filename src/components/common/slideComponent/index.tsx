@@ -20,8 +20,8 @@ const SlideComponent = ({course}:props)=>{
                     <SplideSlide key={course.id}>
                         <SlideCard course={course}/>
                     </SplideSlide>
+                    
                 ))}
-                
             </Splide>
         </div>
         </>
