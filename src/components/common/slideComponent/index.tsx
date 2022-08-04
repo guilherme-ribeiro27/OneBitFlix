@@ -23,7 +23,7 @@ const SlideComponent = ({course}:props)=>{
                 type:'loop',
                 perPage: slideCount,
                 perMove:slideCount * 300,
-                width: 1200,
+                width: slideCount >3 ? 1200: 900,
                 pagination:false,
                 arrows: course.length > 4 ? true : false,
                 drag: course.length > 4 ? true : false,
