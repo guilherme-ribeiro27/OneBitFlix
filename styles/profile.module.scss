@@ -1,0 +1,167 @@
+@import './colors.module.scss';
+
+// Form styles
+.form{
+    border: 1px solid $darkGrey;
+    padding: 20px 0px;
+    max-width: 100%;  
+}
+.formName{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 80%;
+    margin: 20px auto;
+    text-transform: uppercase;       
+}
+.nameAbbreviation{
+    font-size: 40px;
+    font-weight: bold;
+    min-height: 70px;
+    min-width: 70px;
+    background-color: white;
+    color: black;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.userName{
+    font-size: 30px;
+    font-weight: bold;
+}
+.memberTime{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    .memberTimeImg{
+        width: 20px;
+    }
+    .memberTimeText{
+        font-size: 14px;
+        color: $lightGrey;
+    }
+}
+.label{
+    font-size: 14px;
+    font-weight: bold;
+}
+.inputFlexDiv{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 50px;
+}
+.inputNormalDiv{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    gap: 20px;
+}
+.formBtn{
+    border-color: $lightRed;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+    padding: 6px 20px;
+    &:hover{
+        border-color: $darkRed;
+        background-color: transparent;
+        color: $lightGrey;
+        transition: .4s;
+    }
+}
+.inputFlex{
+    width: 250px;
+    text-transform: uppercase;
+    background-color: transparent;
+    border: 1px solid $darkGrey;
+    color: #fff;
+    &::placeholder{
+        color: $lightGrey;
+    }
+    &:focus{
+        box-shadow: none;
+        border-color: $lightRed;
+        color: #fff;
+        background-color: transparent;
+        transition: .4s;
+        
+    }
+}
+.input{
+    @extend .inputFlex;
+    text-transform: lowercase;
+    width: 550px;
+}
+// Form styles end
+// Page styles
+
+.header{
+    background-color: black;
+}
+.footer{
+    background-color: black;
+}
+.title{
+    font-size: 45px;
+    font-weight: bold;
+    padding-bottom: 50px;
+}
+.renderForm{
+    display: block;
+    width: 200px;
+    border: 1px solid $darkGrey;
+    background-color: transparent;
+    font-weight: bold;
+    margin: 0 auto;
+    padding: 14px 0px;
+    transition: .4s;
+    &:hover{
+        background-color: transparent;
+        border-color: $lightRed;
+        color: $lightGrey;
+    }
+    &:focus{
+        border: none;
+    }
+}
+
+@media (max-width: 992px){
+    .title{
+        text-align: center;
+    }
+    .btnColumn{
+        width: 100%;
+        margin-bottom: 40px;
+    }
+}
+@media (max-width: 767px){
+    .inputFlexDiv{
+        gap: 27px;
+    }
+    .inputFlex{
+        width: 400px;
+    }
+}
+@media (max-width: 460px){
+    .title{
+        font-size: 30px;
+        margin-bottom: 10px;
+    }
+    .nameAbbreviation{
+        font-size: 30px;
+        min-height: 60px;
+        min-width: 60px;
+    }
+    .userName{
+        font-size: 25px;
+
+    }
+    .inputFlex{
+        width: 100%;
+    }
+}
