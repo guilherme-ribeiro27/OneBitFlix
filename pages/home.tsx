@@ -5,8 +5,18 @@ import FeaturedCategory from "../src/components/homeAuth/featuredCategory"
 import FeaturedSection from "../src/components/homeAuth/featuredSection"
 import ListCategories from "../src/components/homeAuth/listCategories"
 import NewestCategory from "../src/components/homeAuth/newestCategory"
+import { useRouter } from "next/router"
+import { useEffect } from "react"
 
 const HomeAuth = ()=>{
+    const router = useRouter()
+    
+    useEffect(()=>{
+        console.log(sessionStorage.getItem('onebitflix-token'))
+        if(sessionStorage.getItem('onebitflix-token') == null)
+            router.push('/login')
+    },[])
+
     return (
         <>
             <Head>
