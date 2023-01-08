@@ -17,11 +17,11 @@ const HeaderAuth = () => {
 
     const handleSearch = async(e : FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        router.push(`search?name=${searchName}`)
+        router.push(`/search?name=${searchName}`)
         setSearchName("")
     }
     const handleSearchClick = ()=>{
-        router.push(`search?name=${searchName}`)
+        router.push(`/search?name=${searchName}`)
         setSearchName("")
     }
     useEffect(()=>{
