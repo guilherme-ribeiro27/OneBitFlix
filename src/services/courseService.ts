@@ -13,6 +13,7 @@ export type CourseType = {
     name : string;
     thumbnailUrl: string;
     synopsis: string;
+    favorited   : boolean;
     episodes?: EpisodeType[];
 }
 
@@ -48,11 +49,10 @@ const courseService = {
     },
     removeFav: async(courseId:number | string)=>{
         const token = sessionStorage.getItem("onebitflix-token");
-        const res = await api.delete('/favorites/',{
+        const res = await api.delete(`/favorites/${courseId}`,{
             headers:{
                 Authorization: `Bearer ${token}`
             },
-            data:{courseId}
         }).catch((err)=>{
             return err.response;
         })
@@ -82,7 +82,7 @@ const courseService = {
         })
         return res;
     },
-    removelike: async(courseId : number | string)=>{
+    removeLike: async(courseId : number | string)=>{
         const token = sessionStorage.getItem("onebitflix-token");
 
         const res = await api.delete(`/likes/${courseId}`,{

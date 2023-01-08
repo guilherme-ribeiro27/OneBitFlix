@@ -1,12 +1,18 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useEffect } from 'react'
 import styles from '../../styles/coursePage.module.scss'
 import Head from 'next/head'
 import HeaderAuth from '../../src/components/common/headerAuth'
 import { useRouter } from 'next/router'
 import courseService, { CourseType } from '../../src/services/courseService'
+import { Button, Container } from 'reactstrap'
+import PageSpinner from '../../src/components/common/spinner'
+import { EpisodeList } from '../../src/components/episodeList'
+import Footer from '../../src/components/common/footer'
 
 const CoursePage = () => {
-    
+    const [liked, setLiked] = React.useState<boolean>(false)
+    const [fav, setFav] = React.useState<boolean>(false)
     const [course, setCourse] = React.useState<CourseType>()
 
     const router = useRouter()
@@ -18,6 +24,8 @@ const CoursePage = () => {
         const res = await courseService.getEpisodes(id)
         if(res.status == 200){
             setCourse(res.data)
+            setLiked(res.data.liked)
+            setFav(res.data.favorited)
         }
     }
 
@@ -25,17 +33,90 @@ const CoursePage = () => {
         getCourse()
     }, [id])
     
-  return (
+    const handleLikeCourse = async () => {
+        if(typeof id !== 'string') return 
+
+        if(liked === true){
+            await courseService.removeLike(id)
+            setLiked(false)
+        }else{
+            await courseService.like(id)
+            setLiked(true)
+        }
+    }
+    const handleFavCourse = async () => {
+        if(typeof id !== 'string') return 
+
+        if(liked === true){
+            await courseService.removeFav(id)
+            setFav(false)
+        }else{
+            await courseService.addToFav(id)
+            setFav(true)
+        }
+    }
+    if(course === undefined) return (<PageSpinner/>)
+    return (
     <>
         <Head>
             <title>Onebitflix - {course?.name}</title>
             <link rel="shortcut icon" href="/favicon.svg" type="image/x-icon" />
         </Head>
         <main> 
-            <HeaderAuth/>
-            <p>{course?.name}</p>
+            <div style={{
+                backgroundImage: `linear-gradient(to bottom, #6666661a, #151515), url(${process.env.NEXT_PUBLIC_BASEURL}/${course?.thumbnailUrl})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                minHeight: '550px'
+            }}>
+                <HeaderAuth/>
+            </div>
+            <Container className={styles.courseInfo}>
+                <p className={styles.courseTitle}>{course?.name}</p>
+                <p className={styles.courseDescription}>{course?.synopsis}</p>
+                <Button outline className={styles.courseBtn} disabled={course?.episodes?.length === 0 ? true : false}>
+                    ASSISTIR AGORA
+                    <img src="/buttonPlay.svg" alt="buttonImg" className={styles.buttonImg} />
+                </Button>
+                <div className={styles.interactions}>
+                    {liked === false ? (
+                        <img src="/course/iconLike.svg" alt="likeImg" className={styles.interactionImg} 
+                        onClick={handleLikeCourse}
+                        />
+                    ): (
+                    <img src="/course/iconLiked.svg" alt="likeImg" className={styles.interactionImg} 
+                    onClick={handleLikeCourse}
+                    />
+                    )}
+                    {fav === false ? (
+                        <img src="/course/iconAddFavorites.svg" alt="favoriteImg" className={styles.interactionImg} 
+                        onClick={handleFavCourse}
+                        />
+                    ): (
+                        <img src="/course/iconFavorites.svg" alt="favoriteImg" className={styles.interactionImg} 
+                        onClick={handleFavCourse}
+                        />
+                    )}
+                </div>
+            </Container>
+            <Container className={styles.episodeInfo}>
+                <p className={styles.episodeDivision}>EPISÓDIOS</p>
+                <p className={styles.epissodeLength}>{course?.episodes?.length}</p>
+                {course?.episodes?.length === 0 ? (
+                    <p>
+                        <strong>Não temos episódios ainda. Volte outra hora! &#x1F606;&#x1F918;</strong>
+                    </p>
+                ):(
+                    course?.episodes?.map((episode, index) => (
+                        <> 
+                            <EpisodeList key={episode.id} episode={episode}/>
+                        </>
+                    ))
+                )}
+            </Container>
+            <Footer/>
         </main> 
     </>
-  )
+    )
 }
 export default CoursePage
