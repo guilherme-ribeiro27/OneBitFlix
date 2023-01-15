@@ -109,7 +109,7 @@ const CoursePage = () => {
                 ):(
                     course?.episodes?.map((episode, index) => (
                         <> 
-                            <EpisodeList key={episode.id} episode={episode}/>
+                            <EpisodeList key={episode.id} episode={episode} course={course}/>
                         </>
                     ))
                 )}
